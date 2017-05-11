@@ -28,11 +28,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import springfox.documentation.annotations.ApiIgnore;
-import wang.flybird.annotation.SysLogAnnotation;
 import wang.flybird.api.security.JwtAuthenticationRequest;
 import wang.flybird.api.security.JwtTokenUtil;
 import wang.flybird.api.security.JwtUser;
 import wang.flybird.api.security.service.JwtAuthenticationResponse;
+import wang.flybird.config.annotation.SysLogAnnotation;
 import wang.flybird.utils.net.CookieUtil;
 
 @RestController
@@ -94,6 +94,7 @@ public class AuthenticationRestController {
         return ResponseEntity.ok(att);
     }
 
+//    @SysLogAnnotation("刷新Token")
     @RequestMapping(value = "${jwt.route.authentication.refresh}", method = RequestMethod.POST)
     @ApiOperation(value = "刷新Token",notes = "刷新Token以cookie形式返回")
     public ResponseEntity<?> refreshAndGetAuthenticationToken(

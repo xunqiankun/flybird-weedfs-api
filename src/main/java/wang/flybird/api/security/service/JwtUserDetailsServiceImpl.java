@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import wang.flybird.api.security.JwtUserFactory;
-import wang.flybird.entity.User;
-import wang.flybird.entity.repository.UserRepository;
+import wang.flybird.entity.FbUser;
+import wang.flybird.entity.repository.SysUserRepository;
 
 /**
  * Created by stephan on 20.03.16.
@@ -17,11 +17,11 @@ import wang.flybird.entity.repository.UserRepository;
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private SysUserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        FbUser user = userRepository.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));

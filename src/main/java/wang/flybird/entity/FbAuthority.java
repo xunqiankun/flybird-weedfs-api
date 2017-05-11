@@ -3,19 +3,21 @@ package wang.flybird.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import wang.flybird.enums.AuthorityName;
+import org.hibernate.annotations.GenericGenerator;
+
+import wang.flybird.entity.enums.AuthorityName;
 
 import java.util.List;
 
 @Entity
-@Table(name = "AUTHORITY")
-public class Authority {
+@Table(name = "FB_AUTHORITY")
+public class FbAuthority {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authority_seq")
-    @SequenceGenerator(name = "authority_seq", sequenceName = "authority_seq", allocationSize = 1)
-    private Long id;
+	@GeneratedValue(generator="id")
+	@GenericGenerator(name = "id", strategy = "assigned")
+    private String id;
 
     @Column(name = "NAME", length = 50)
     @NotNull
@@ -23,13 +25,13 @@ public class Authority {
     private AuthorityName name;
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
-    private List<User> users;
+    private List<FbUser> users;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -41,11 +43,11 @@ public class Authority {
         this.name = name;
     }
 
-    public List<User> getUsers() {
+    public List<FbUser> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<FbUser> users) {
         this.users = users;
     }
 }

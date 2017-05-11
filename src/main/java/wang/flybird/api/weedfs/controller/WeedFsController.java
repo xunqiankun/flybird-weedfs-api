@@ -1,24 +1,17 @@
 package wang.flybird.api.weedfs.controller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.lokra.seaweedfs.core.file.FileHandleStatus;
 import org.lokra.seaweedfs.core.http.StreamResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,8 +21,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import wang.flybird.api.weedfs.service.WeedFsService;
+import wang.flybird.config.annotation.SysLogAnnotation;
 
 @RestController
 @RequestMapping(path = "/api/weedfs")
@@ -41,6 +34,7 @@ public class WeedFsController {
 	@Autowired
 	private WeedFsService weedFsService;
 	
+	@SysLogAnnotation("上传文件")
 	@RequestMapping(path = "/uploadfile", method = RequestMethod.POST)
 	@ApiOperation(value = "上传文件",notes = "上传文件说明")
 	@ApiImplicitParams({
@@ -58,6 +52,7 @@ public class WeedFsController {
 		return fileHandleStatus;
 	}
 	
+	@SysLogAnnotation("获取文件")
 	@RequestMapping(path = "/getfile", method = {RequestMethod.POST,RequestMethod.GET})
 	@ApiOperation(value = "获取文件",notes = "获取文件说明")
 	@ApiImplicitParams({

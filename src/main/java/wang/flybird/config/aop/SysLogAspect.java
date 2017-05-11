@@ -1,4 +1,4 @@
-package wang.flybird.aop;
+package wang.flybird.config.aop;
 
 import java.lang.reflect.Method;
 import java.util.Date;
@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 
-import wang.flybird.annotation.SysLogAnnotation;
 import wang.flybird.api.security.JwtTokenUtil;
-import wang.flybird.entity.SysLog;
+import wang.flybird.config.annotation.SysLogAnnotation;
+import wang.flybird.entity.FbOptLog;
 import wang.flybird.entity.repository.SysLogRepository;
 import wang.flybird.utils.idwoker.IdWorker;
 import wang.flybird.utils.net.CookieUtil;
@@ -50,7 +50,7 @@ public class SysLogAspect {
 	@Autowired
 	private IdWorker idWorker;
 	
-	@Pointcut("@annotation(wang.flybird.annotation.SysLogAnnotation)")
+	@Pointcut("@annotation(wang.flybird.config.annotation.SysLogAnnotation)")
 //	@Pointcut("execution(* com.zkn.learnspringboot.web.controller..*.*(..))")
 	public void logPointCut() { 
 		
@@ -61,27 +61,27 @@ public class SysLogAspect {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
 		
-		SysLog sysLog = new SysLog();
+		FbOptLog fbOptLog = new FbOptLog();
 		SysLogAnnotation sysLogAnnotation = method.getAnnotation(SysLogAnnotation.class);
 		if(sysLogAnnotation != null){
 			//注解上的描述 
-			sysLog.setOperation(sysLogAnnotation.value());
+			fbOptLog.setOperation(sysLogAnnotation.value());
 		}
 		
 		//请求的方法名
 		String className = joinPoint.getTarget().getClass().getName();
 		String methodName = signature.getName();
-		sysLog.setMethod(className + "." + methodName + "()");
+		fbOptLog.setMethod(className + "." + methodName + "()");
 		
 		//请求的参数
 		Object[] args = joinPoint.getArgs();
 		String params = JSON.toJSONString(args[0]);
-		sysLog.setParams(params);
+		fbOptLog.setParams(params);
 		
 		//获取request
 		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
 		//设置IP地址
-		sysLog.setIp(IPUtils.getIpAddr(request));
+		fbOptLog.setIp(IPUtils.getIpAddr(request));
 		
 		//用户名
 		Cookie cookie = CookieUtil.getCookie(request, this.tokenHeader);
@@ -91,13 +91,13 @@ public class SysLogAspect {
     	}
     	String username = jwtTokenUtil.getUsernameFromToken(authToken);
 		
-		sysLog.setUsername(username);
+    	fbOptLog.setUsername(username);
 		
-		sysLog.setCreateDate(new Date());
-		sysLog.setId(String.valueOf(idWorker.getId()));
+    	fbOptLog.setCreateDate(new Date());
+    	fbOptLog.setId(idWorker.getStrId());
 		
 		//保存系统日志
-		sysLogRepository.save(sysLog);
+		sysLogRepository.save(fbOptLog);
 	}
 	
 }

@@ -3,8 +3,9 @@ package wang.flybird.utils.idwoker;
 import java.io.IOException;
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import wang.flybird.utils.date.DateUtils;
 
 /**
  * tweeter的snowflake 移植到Java:
@@ -15,7 +16,7 @@ public class IdWorker {
 
 	private final long workerId;//服务id
     private final long datacenterId;//数据中心id
-    private final long idepoch;  // 时间起始标记点，作为基准，一般取系统的最近时间
+    private final long idepoch;  // 时间起始标记点，作为基准，一般取系统的最近时间2012年
 
     private static final long workerIdBits = 5L; // 机器标识位数
     private static final long datacenterIdBits = 5L; //数据中心标识位数
@@ -77,6 +78,14 @@ public class IdWorker {
         long id = nextId();
         return id;
     }
+    
+    public String getStrId() {
+        long id = nextId();
+        String currentTime = DateUtils.getCurrentTime("yyyyMMddHHmm");
+        return currentTime+String.valueOf(id);
+    }
+    
+    
 
     private synchronized long nextId() {
         long timestamp = timeGen();
@@ -92,6 +101,7 @@ public class IdWorker {
             sequence = 0;
         }
         lastTimestamp = timestamp;
+        
         long id = ((timestamp - idepoch) << timestampLeftShift)//
                 | (datacenterId << datacenterIdShift)//
                 | (workerId << workerIdShift)//

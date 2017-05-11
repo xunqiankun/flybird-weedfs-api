@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import springfox.documentation.annotations.ApiIgnore;
 import wang.flybird.api.demo.entity.Person;
-import wang.flybird.entity.User;
-import wang.flybird.entity.repository.UserRepository;
+import wang.flybird.entity.FbUser;
+import wang.flybird.entity.repository.SysUserRepository;
 import wang.flybird.utils.idwoker.IdWorker;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 public class PersonRestService {
     private static final List<Person> persons;
     @Autowired
-	private UserRepository userRepository;
+	private SysUserRepository userRepository;
     
     @Autowired
     private IdWorker idWorker;
@@ -45,7 +45,7 @@ public class PersonRestService {
     }
     @RequestMapping(path = "/persons/adduser" , method = RequestMethod.GET)
     public String adduser(){
-    	User user = new User();
+    	FbUser user = new FbUser();
     	
         
         user.setPassword("dddd");
@@ -57,7 +57,7 @@ public class PersonRestService {
         
         for(int i=0;i<1000;i++){
         	 try {
-     			user.setId(idWorker.getId());
+     			user.setId(idWorker.getStrId());
      			user.setUsername("wangpf"+i);
      		} catch (Exception e) {
      			// TODO Auto-generated catch block

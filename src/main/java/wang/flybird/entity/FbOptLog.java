@@ -13,9 +13,9 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="sys_log")
-@NamedQuery(name="SysLog.findAll", query="SELECT s FROM SysLog s")
-public class SysLog implements Serializable {
+@Table(name="fb_optlog")
+@NamedQuery(name="FbOptLog.findAll", query="SELECT s FROM FbOptLog s")
+public class FbOptLog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -38,7 +38,7 @@ public class SysLog implements Serializable {
 
 	private String username;
 
-	public SysLog() {
+	public FbOptLog() {
 	}
 
 	public String getId() {

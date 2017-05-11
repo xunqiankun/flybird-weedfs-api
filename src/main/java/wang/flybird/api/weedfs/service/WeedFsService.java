@@ -32,7 +32,7 @@ public class WeedFsService {
 		FileHandleStatus fileHandleStatus = null;
 		try {
 			fileHandleStatus = fileTemplate.saveFileByStream(fileName, stream);
-			logger.info(fileHandleStatus.toString());
+			logger.debug(fileHandleStatus.toString());
 		} catch (IOException e) {
 			logger.error("",e);
 		}

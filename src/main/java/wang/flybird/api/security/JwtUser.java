@@ -17,7 +17,7 @@ public class JwtUser implements UserDetails {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final Long id;
+	private final String id;
     private final String username;
     private final String firstname;
     private final String lastname;
@@ -28,7 +28,7 @@ public class JwtUser implements UserDetails {
     private final Date lastPasswordResetDate;
 
     public JwtUser(
-          Long id,
+          String id,
           String username,
           String firstname,
           String lastname,
@@ -49,7 +49,7 @@ public class JwtUser implements UserDetails {
     }
 
     @JsonIgnore
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

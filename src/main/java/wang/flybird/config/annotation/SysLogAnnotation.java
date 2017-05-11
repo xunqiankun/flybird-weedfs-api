@@ -1,4 +1,4 @@
-package wang.flybird.annotation;
+package wang.flybird.config.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
