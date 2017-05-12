@@ -1,19 +1,16 @@
 package com.flybird.security;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.assertj.core.util.DateUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.util.ReflectionUtils;
 
 import wang.flybird.api.security.JwtTokenUtil;
-
-import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by stephan on 10.09.16.
@@ -40,7 +37,8 @@ public class JwtTokenUtilTest {
         assertThat(token).isNotEqualTo(laterToken);
     }
 
-    private Map<String, Object> createClaims(String creationDate) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private Map<String, Object> createClaims(String creationDate) {
         Map<String, Object> claims = new HashMap();
         claims.put(JwtTokenUtil.CLAIM_KEY_USERNAME, "testUser");
         claims.put(JwtTokenUtil.CLAIM_KEY_AUDIENCE, "testAudience");

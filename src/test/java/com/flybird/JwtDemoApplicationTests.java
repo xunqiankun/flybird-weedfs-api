@@ -7,6 +7,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import wang.flybird.flybirdApplication;
 
+@SuppressWarnings("deprecation")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = flybirdApplication.class)
 public class JwtDemoApplicationTests {

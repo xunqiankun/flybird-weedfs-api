@@ -67,7 +67,8 @@ public class BeanMapConvert {
      * @date 2016-09-25
      * @since v1.0.0
      */
-    public static Object map2Bean(Map map,Object object){
+    @SuppressWarnings("rawtypes")
+	public static Object map2Bean(Map map,Object object){
         if(map == null || object == null){
             return null;
         }

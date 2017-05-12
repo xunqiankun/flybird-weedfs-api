@@ -3,6 +3,9 @@ package wang.flybird.api.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import wang.flybird.utils.net.CookieUtil;
+import wang.flybird.utils.net.WebUtil;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +15,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class JwtTokenUtil implements Serializable {
@@ -32,6 +38,23 @@ public class JwtTokenUtil implements Serializable {
 
     @Value("${jwt.expiration}")
     private Long expiration;
+    
+    @Value("${jwt.header}")
+    private String tokenHeader;
+    
+    
+    public String getUserNameFromRequest(){
+    	String username = "";
+    	HttpServletRequest request = WebUtil.getHttpServletRequest();
+    	Cookie cookie = CookieUtil.getCookie(request, this.tokenHeader);
+    	String authToken = "";
+    	if(cookie != null){
+    		authToken = cookie.getValue();	
+    	}
+        username = getUsernameFromToken(authToken);
+        
+        return username;
+    }
 
     public String getUsernameFromToken(String token) {
         String username="";

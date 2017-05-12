@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.lokra.seaweedfs.core.file.FileHandleStatus;
@@ -23,6 +25,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import wang.flybird.api.weedfs.service.WeedFsService;
 import wang.flybird.config.annotation.SysLogAnnotation;
+import wang.flybird.utils.net.CookieUtil;
 
 @RestController
 @RequestMapping(path = "/api/weedfs")
@@ -44,6 +47,7 @@ public class WeedFsController {
 	public FileHandleStatus uploadfile(String fileName, MultipartFile file){
 		FileHandleStatus fileHandleStatus = null;
 		try {
+			
 			fileHandleStatus = weedFsService.savefile(fileName, file.getInputStream());
 		}catch (IOException e) {
 			logger.error(null, e);
