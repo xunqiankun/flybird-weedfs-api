@@ -83,6 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 		"/swagger-resources/**",
                 		"/configuration/security",
                 		"/configuration/ui",
+                		"/druid/**",
                 		"/api/authentication/auth/**",
                 		"/api/weedfs/getfile/**"
                 		).permitAll()
