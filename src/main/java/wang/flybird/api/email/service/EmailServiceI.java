@@ -6,7 +6,7 @@ import java.util.Map;
   
 import wang.flybird.api.email.service.Pair;  
   
-public interface EmailService {  
+public interface EmailServiceI {  
   
     /** 
      * 发送简单邮件 

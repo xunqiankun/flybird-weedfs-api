@@ -117,4 +117,70 @@ public class WeedFsController {
 
 	}
 	
+	@SysLogAnnotation("获取文件")
+	@RequestMapping(path = "/getfileByToken", method = {RequestMethod.POST,RequestMethod.GET})
+	@ApiOperation(value = "获取文件",notes = "获取文件说明")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",value="权限令牌",allowableValues="",required=true,dataType="string",paramType="query"),
+	   @ApiImplicitParam(name="fid",value="文件id",allowableValues="",required=true,dataType="string",paramType="query"),
+	   @ApiImplicitParam(name="fileName",value="文件名称",allowableValues="",required=true,dataType="string",paramType="query")
+	 })
+	public void getfile(String fid , String fileName , String token, HttpServletResponse response){
+		
+		//
+		//
+		/**
+		 * 验证用户权限
+		 * 1.对请求参数进行解密
+		 * 2.验证是否过期
+		 * 3.
+		 */
+		
+		if(!"123456".equals(token)){
+			
+		}else{
+
+			StreamResponse StreamResponse = null;
+			StreamResponse = weedFsService.getfile(fid);
+			
+			ServletOutputStream out;
+			InputStream inputStream = StreamResponse.getInputStream();
+			
+			try {
+		      response.setContentType(MediaType.MULTIPART_FORM_DATA_VALUE);
+		      response.setHeader("Content-Disposition", "attachment;fileName="+fileName);
+		          
+			  out = response.getOutputStream();
+			  
+//			  int b = 0;  
+//	          byte[] buffer = new byte[512];  
+//	          while (b != -1){  
+//	              b = inputStream.read(buffer);  
+//	              //4.写到输出流(out)中  
+//	              out.write(buffer,0,b);  
+//	          }  
+			  
+			  byte[] buffer = new byte[1024];
+		      int len = -1;
+		      while((len = inputStream.read(buffer)) != -1){
+		      	out.write(buffer,0,len);
+		
+	          }
+		      inputStream.close();
+		      out.close();
+			  
+	          inputStream.close();  
+	          out.close();  
+	          out.flush(); 
+	          
+	            
+			
+			} catch (IOException e) {  
+	            e.printStackTrace();  
+	        }
+
+		}
+		
+	}
+	
 }

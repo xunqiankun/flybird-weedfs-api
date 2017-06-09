@@ -1,20 +1,11 @@
 package wang.flybird.api.email.controller;
 
-import io.swagger.annotations.ApiOperation;
-import wang.flybird.api.email.service.Pair;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -26,11 +17,14 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.h2.util.New;
-import org.springframework.web.bind.annotation.RequestMapping;  
-import org.springframework.web.bind.annotation.RequestMethod;  
-import org.springframework.web.bind.annotation.ResponseBody;  
-import org.springframework.web.bind.annotation.RestController;  
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.ApiOperation;
+import wang.flybird.api.email.service.EmailServiceI;
+import wang.flybird.api.email.service.Pair;  
   
   
 @RestController  
@@ -38,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoEmailController{  
   
     @Resource  
-    private wang.flybird.api.email.service.EmailService emailService;  
+    private EmailServiceI emailService;  
     
     /*** 
      * 创建表头 

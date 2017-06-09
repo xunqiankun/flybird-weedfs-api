@@ -89,9 +89,9 @@ public class SysLogAspect {
     	if(cookie != null){
     		authToken = cookie.getValue();	
     	}
-    	String username = jwtTokenUtil.getUsernameFromToken(authToken);
+    	String userid = jwtTokenUtil.getUseridFromToken(authToken);
 		
-    	fbOptLog.setUsername(username);
+    	fbOptLog.setUsername(userid);
 		
     	fbOptLog.setCreateDate(new Date());
     	fbOptLog.setId(idWorker.getStrId());

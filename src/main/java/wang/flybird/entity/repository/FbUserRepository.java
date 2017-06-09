@@ -7,6 +7,9 @@ import wang.flybird.entity.FbUser;
 /**
  * Created by stephan on 20.03.16.
  */
-public interface SysUserRepository extends JpaRepository<FbUser, Long> {
+public interface FbUserRepository extends JpaRepository<FbUser, Long> {
+    FbUser findById(String id);
     FbUser findByUsername(String username);
+	FbUser findByWxunionid(String wxUnionId);
+    
 }

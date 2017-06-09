@@ -40,7 +40,7 @@ public class JwtTokenUtilTest {
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	private Map<String, Object> createClaims(String creationDate) {
         Map<String, Object> claims = new HashMap();
-        claims.put(JwtTokenUtil.CLAIM_KEY_USERNAME, "testUser");
+        claims.put(JwtTokenUtil.CLAIM_KEY_USERID, "testUser");
         claims.put(JwtTokenUtil.CLAIM_KEY_AUDIENCE, "testAudience");
         claims.put(JwtTokenUtil.CLAIM_KEY_CREATED, DateUtil.parseDatetime(creationDate));
         return claims;

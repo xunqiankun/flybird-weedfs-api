@@ -1,16 +1,5 @@
 package wang.flybird.api.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import wang.flybird.utils.net.CookieUtil;
-import wang.flybird.utils.net.WebUtil;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mobile.device.Device;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,12 +8,22 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mobile.device.Device;
+import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import wang.flybird.utils.net.CookieUtil;
+import wang.flybird.utils.net.WebUtil;
+
 @Component
 public class JwtTokenUtil implements Serializable {
 
     private static final long serialVersionUID = -3301605591108950415L;
 
-    public static final String CLAIM_KEY_USERNAME = "sub";
+    public static final String CLAIM_KEY_USERID = "sub";
     public static final String CLAIM_KEY_AUDIENCE = "audience";
     public static final String CLAIM_KEY_CREATED = "created";
 
@@ -43,28 +42,28 @@ public class JwtTokenUtil implements Serializable {
     private String tokenHeader;
     
     
-    public String getUserNameFromRequest(){
-    	String username = "";
+    public String getUserIdFromRequest(){
+    	String userid = "";
     	HttpServletRequest request = WebUtil.getHttpServletRequest();
     	Cookie cookie = CookieUtil.getCookie(request, this.tokenHeader);
     	String authToken = "";
     	if(cookie != null){
     		authToken = cookie.getValue();	
     	}
-        username = getUsernameFromToken(authToken);
+    	userid = getUseridFromToken(authToken);
         
-        return username;
+        return userid;
     }
 
-    public String getUsernameFromToken(String token) {
-        String username="";
+    public String getUseridFromToken(String token) {
+        String userid="";
         try {
             final Claims claims = getClaimsFromToken(token);
-            username = claims.getSubject();
+            userid = claims.getSubject();
         } catch (Exception e) {
-            username = null;
+        	userid = null;
         }
-        return username;
+        return userid;
     }
 
     public Date getCreatedDateFromToken(String token) {
@@ -143,9 +142,9 @@ public class JwtTokenUtil implements Serializable {
         return (AUDIENCE_TABLET.equals(audience) || AUDIENCE_MOBILE.equals(audience));
     }
 
-    public String generateToken(UserDetails userDetails, Device device) {
+    public String generateToken(JwtUser jwtUser, Device device) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
+        claims.put(CLAIM_KEY_USERID, jwtUser.getId());
         claims.put(CLAIM_KEY_AUDIENCE, generateAudience(device));
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
@@ -177,14 +176,14 @@ public class JwtTokenUtil implements Serializable {
         return refreshedToken;
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        JwtUser user = (JwtUser) userDetails;
-        final String username = getUsernameFromToken(token);
+    public Boolean validateToken(String token, JwtUser jwtUser) {
+//        JwtUser user = (JwtUser) userDetails;
+        final String userid = getUseridFromToken(token);
         final Date created = getCreatedDateFromToken(token);
         //final Date expiration = getExpirationDateFromToken(token);
         return (
-                username.equals(user.getUsername())
+        		userid.equals(jwtUser.getId())
                         && !isTokenExpired(token)
-                        && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate()));
+                        && !isCreatedBeforeLastPasswordReset(created, jwtUser.getLastPasswordResetDate()));
     }
 }

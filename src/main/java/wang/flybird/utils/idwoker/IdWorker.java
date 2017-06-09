@@ -142,16 +142,16 @@ public class IdWorker {
         return sb.toString();
     }
 
-    public static void main(String[] args) throws IOException {
-    	//IdWorker uid = new IdWorker();
-//        int n = 100;
-//        System.out.println(uid.toString());
-        //System.out.println(uid.nextId());
-//        for(int i=0; i<1000; i++) {
-//            System.out.write(uid.getId());
-//            System.out.println(uid.nextId());
-//        }
-    	long l=5L;
-    	System.out.println(-1^(-1<<l));
-    }
+//    public static void main(String[] args) throws IOException {
+//    	//IdWorker uid = new IdWorker();
+////        int n = 100;
+////        System.out.println(uid.toString());
+//        //System.out.println(uid.nextId());
+////        for(int i=0; i<1000; i++) {
+////            System.out.write(uid.getId());
+////            System.out.println(uid.nextId());
+////        }
+//    	long l=5L;
+//    	System.out.println(-1^(-1<<l));
+//    }
 }

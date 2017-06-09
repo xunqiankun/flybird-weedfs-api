@@ -30,27 +30,37 @@ public class FbUser {
     private String id;
 
     @Column(name = "USERNAME", length = 50, unique = true)
-    @NotNull
+//    @NotNull
     @Size(min = 4, max = 50)
     private String username;
 
     @Column(name = "PASSWORD", length = 100)
-    @NotNull
+//    @NotNull
     @Size(min = 4, max = 100)
     private String password;
+    
+    @Column(name = "MOBILEPHONE", length = 20)
+//    @NotNull
+    @Size(min = 4, max = 20)
+    private String mobilephone;
+    
+    @Column(name = "WX_UNIONID", length = 20)
+	//  @NotNull
+	@Size(min = 4, max = 20)
+	private String wxunionid;
 
     @Column(name = "FIRSTNAME", length = 50)
-    @NotNull
+//    @NotNull
     @Size(min = 4, max = 50)
     private String firstname;
 
     @Column(name = "LASTNAME", length = 50)
-    @NotNull
+//    @NotNull
     @Size(min = 4, max = 50)
     private String lastname;
 
     @Column(name = "EMAIL", length = 50)
-    @NotNull
+//    @NotNull
     @Size(min = 4, max = 50)
     private String email;
 
@@ -60,7 +70,7 @@ public class FbUser {
 
     @Column(name = "LASTPASSWORDRESETDATE")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
+//    @NotNull
     private Date lastPasswordResetDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -141,4 +151,22 @@ public class FbUser {
     public void setLastPasswordResetDate(Date lastPasswordResetDate) {
         this.lastPasswordResetDate = lastPasswordResetDate;
     }
+
+	public String getMobilephone() {
+		return mobilephone;
+	}
+
+	public void setMobilephone(String mobilephone) {
+		this.mobilephone = mobilephone;
+	}
+
+	public String getWxunionid() {
+		return wxunionid;
+	}
+
+	public void setWxunionid(String wxunionid) {
+		this.wxunionid = wxunionid;
+	}
+
+
 }

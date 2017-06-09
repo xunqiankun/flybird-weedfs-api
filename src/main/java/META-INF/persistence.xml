@@ -7,5 +7,11 @@
 		<class>wang.flybird.entity.FbOptLog</class>
 		<class>wang.flybird.entity.FbUser</class>
 		<class>wang.flybird.entity.WfFile</class>
+		<class>wang.flybird.entity.FbUserAccountSession</class>
+		<class>wang.flybird.entity.FbUserAccount</class>
+		<class>wang.flybird.entity.FbUserBase</class>
+		<class>wang.flybird.entity.SysConfig</class>
+		<class>wang.flybird.entity.FbUserAuthority</class>
+		<class>wang.flybird.entity.FbMessage</class>
 	</persistence-unit>
 </persistence>

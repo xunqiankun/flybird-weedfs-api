@@ -63,13 +63,13 @@ public class WeedFsService {
 	
 	private void saveWfFile(String fid,String fileName,long fsize){
 		String id = idWorker.getStrId();
-		String username = jwtTokenUtil.getUserNameFromRequest();
+		String userid = jwtTokenUtil.getUserIdFromRequest();
 		Date uptime = DateUtils.getCurrentDate();
 		String delflag = TrueOrFalse.FALSE.getValue();
 		
 		WfFile wfFile = new WfFile();
 		wfFile.setId(id);
-		wfFile.setUsername(username);
+		wfFile.setUsername(userid);
 		wfFile.setFid(fid);
 		wfFile.setFname(fileName);
 		wfFile.setFsize(fsize);

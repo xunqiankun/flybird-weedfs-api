@@ -85,7 +85,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 		"/configuration/ui",
                 		"/druid/**",
                 		"/api/authentication/auth/**",
-                		"/api/weedfs/getfile/**"
+                		"/api/authentication/doWeChatLogin/**",
+                		"/api/weedfs/getfile/**",
+                		"/api/weedfs/getfileByToken/**"
                 		).permitAll()
                 .anyRequest().authenticated();
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 import wang.flybird.api.demo.entity.Person;
 import wang.flybird.entity.FbUser;
-import wang.flybird.entity.repository.SysUserRepository;
+import wang.flybird.entity.repository.FbUserRepository;
 import wang.flybird.utils.idwoker.IdWorker;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 public class PersonRestService {
     private static final List<Person> persons;
     @Autowired
-	private SysUserRepository userRepository;
+	private FbUserRepository userRepository;
     
     @Autowired
     private IdWorker idWorker;

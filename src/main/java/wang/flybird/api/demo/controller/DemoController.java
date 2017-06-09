@@ -9,18 +9,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import springfox.documentation.annotations.ApiIgnore;
 import wang.flybird.api.demo.repository.DemoRepository;
 import wang.flybird.api.demo.viewmodel.DemoInfo;
 
 @RestController
 @Transactional
-@ApiIgnore
+//@ApiIgnore
 public class DemoController {
 	@Autowired
 	DemoRepository demoRepository;
 
 	@RequestMapping(path = "/demo", method = RequestMethod.GET)
+	@ApiImplicitParams({
+		   @ApiImplicitParam(name = "authtoken", value = "token", required = true,paramType = "header"),		
+		 })
+
 	//@PreAuthorize("hasRole('USER')")
     public Page<DemoInfo> getDemoInfo() {
 		

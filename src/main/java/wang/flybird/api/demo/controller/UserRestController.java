@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 import wang.flybird.api.security.JwtTokenUtil;
 import wang.flybird.api.security.JwtUser;
+import wang.flybird.api.security.service.JwtUserDetailsServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,13 +25,13 @@ public class UserRestController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private JwtUserDetailsServiceImpl userDetailsService;
 
     @RequestMapping(value = "user", method = RequestMethod.GET)
     public JwtUser getAuthenticatedUser(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
-        String username = jwtTokenUtil.getUsernameFromToken(token);
-        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+        String userid = jwtTokenUtil.getUseridFromToken(token);
+        JwtUser user = (JwtUser) userDetailsService.loadUserByUserid(userid);
         return user;
     }
 

@@ -17,14 +17,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
-import wang.flybird.api.email.service.EmailService;
+import wang.flybird.api.email.service.EmailServiceI;
 import wang.flybird.api.email.service.Pair;
 import wang.flybird.config.EmailConfig;
 
   
 @SuppressWarnings("deprecation")
 @Service  
-public class EmailServiceImpl implements EmailService {  
+public class EmailServiceImpl implements EmailServiceI {  
 	
 	protected Logger logger = LoggerFactory.getLogger(getClass());
   
