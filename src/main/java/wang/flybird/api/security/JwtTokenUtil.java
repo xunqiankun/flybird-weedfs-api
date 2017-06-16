@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import wang.flybird.utils.net.CookieUtil;
 import wang.flybird.utils.net.WebUtil;
 
 @Component
@@ -45,11 +43,7 @@ public class JwtTokenUtil implements Serializable {
     public String getUserIdFromRequest(){
     	String userid = "";
     	HttpServletRequest request = WebUtil.getHttpServletRequest();
-    	Cookie cookie = CookieUtil.getCookie(request, this.tokenHeader);
-    	String authToken = "";
-    	if(cookie != null){
-    		authToken = cookie.getValue();	
-    	}
+    	String authToken = request.getHeader(this.tokenHeader);    
     	userid = getUseridFromToken(authToken);
         
         return userid;

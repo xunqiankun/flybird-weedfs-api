@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import wang.flybird.entity.FbMessage;
 
 public interface FbMessageRepository   extends JpaRepository<FbMessage, Long>  {
-	
+	void findById(String id);
 }

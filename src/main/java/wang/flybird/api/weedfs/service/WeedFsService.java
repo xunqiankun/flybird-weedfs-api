@@ -45,13 +45,14 @@ public class WeedFsService {
 	private JwtTokenUtil jwtTokenUtil;
 	
 	public FileHandleStatus savefile(String fileName, InputStream stream){
-		FileHandleStatus fileHandleStatus = null;
+		FileHandleStatus fileHandleStatus = new FileHandleStatus("",0,"","",0);
 		try {
 			fileHandleStatus = fileTemplate.saveFileByStream(fileName, stream);
 			
 			String Fid = fileHandleStatus.getFileId();
 			long Fsize = fileHandleStatus.getSize();
 			saveWfFile(Fid,fileName,Fsize);
+			
 			
 			logger.debug(fileHandleStatus.toString());
 		} catch (IOException e) {

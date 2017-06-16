@@ -2,6 +2,9 @@ package wang.flybird.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.Date;
 
 
@@ -16,8 +19,9 @@ public class FbMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="FB_MESSAGE_ID_GENERATOR" )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FB_MESSAGE_ID_GENERATOR")
+	@Column(name="id")
+	@GeneratedValue(generator="id")
+	@GenericGenerator(name = "id", strategy = "assigned")
 	private String id;
 
 	private String msg;

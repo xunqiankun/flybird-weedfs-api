@@ -19,17 +19,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import wang.flybird.api.weedfs.service.WeedFsService;
 import wang.flybird.config.annotation.SysLogAnnotation;
+import wang.flybird.entity.custom.R;
 import wang.flybird.utils.net.CookieUtil;
 
 @RestController
 @RequestMapping(path = "/api/weedfs")
 @Api(value="WeedFs文件服务接口")
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class WeedFsController {
 	
 	protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -44,16 +48,17 @@ public class WeedFsController {
 	   @ApiImplicitParam(name="fileName",value="文件名",allowableValues="",required=true,dataType="string",paramType="query"),
 	   @ApiImplicitParam(name="file",value="文件",allowableValues="",required=true,dataType="file",paramType="form")
 	 })
-	public FileHandleStatus uploadfile(String fileName, MultipartFile file){
+	public R uploadfile(String fileName, MultipartFile file){
 		FileHandleStatus fileHandleStatus = null;
 		try {
 			
 			fileHandleStatus = weedFsService.savefile(fileName, file.getInputStream());
 		}catch (IOException e) {
 			logger.error(null, e);
+			return R.error("上传文件异常"+e);
 		}
-		
-		return fileHandleStatus;
+		String fid = fileHandleStatus.getFileId();
+		return R.ok().put("fid", fid);
 	}
 	
 	@SysLogAnnotation("获取文件")
